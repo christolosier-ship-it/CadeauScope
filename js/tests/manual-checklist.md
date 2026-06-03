@@ -1,0 +1,23 @@
+# Checklist manuelle CadeauScope V1
+
+- [ ] créer une personne
+- [ ] créer une idée
+- [ ] modifier une idée
+- [ ] changer un statut
+- [ ] passer une idée à Offert
+- [ ] ajouter à l’historique
+- [ ] ajouter un cadeau passé
+- [ ] créer une occasion
+- [ ] ajouter budget global
+- [ ] ajouter budget par personne
+- [ ] lancer Mode Panique depuis accueil
+- [ ] lancer Mode Panique depuis personne
+- [ ] lancer Mode Panique depuis occasion
+- [ ] vérifier section Hors budget
+- [ ] vérifier personne sans idée
+- [ ] exporter JSON
+- [ ] importer JSON
+- [ ] réinitialiser avec SUPPRIMER
+- [ ] tester offline
+- [ ] vérifier thème clair/sombre/auto
+- [ ] vérifier qu’aucun PNG n’a été généré

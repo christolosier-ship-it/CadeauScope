@@ -1,0 +1,6 @@
+import { STATUSES, INTEREST_LEVELS, RELATIONS, OCCASION_TYPES, OCCASION_STATUS, REACTIONS } from '../config.js';
+import { escapeHtml } from '../utils/strings.js';
+export const options = (obj, selected='') => Object.entries(obj).map(([v,l])=>`<option value="${v}" ${v==selected?'selected':''}>${l}</option>`).join('');
+export const peopleOptions = (people, selected='') => people.map(p=>`<option value="${p.id}" ${p.id==selected?'selected':''}>${escapeHtml(p.name)}</option>`).join('');
+export const categoryOptions = (cats, selected='cat_autre') => cats.map(c=>`<option value="${c.id}" ${c.id==selected?'selected':''}>${escapeHtml(c.name)}</option>`).join('');
+export { STATUSES, INTEREST_LEVELS, RELATIONS, OCCASION_TYPES, OCCASION_STATUS, REACTIONS };

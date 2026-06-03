@@ -1,0 +1,3 @@
+import { uid } from '../utils/ids.js';
+import { todayInput, nowIso } from '../utils/dates.js';
+export function createHistory(data = {}) { const now = nowIso(); return { id: data.id || uid('hist'), personId: data.personId || '', ideaId: data.ideaId || '', occasionId: data.occasionId || '', occasionNameSnapshot: data.occasionNameSnapshot || '', title: (data.title || '').trim(), price: data.price === '' || data.price == null ? null : Number(data.price), priceText: data.priceText || '', date: data.date || todayInput(), reaction: data.reaction || '', note: data.note || '', createdAt: data.createdAt || now, updatedAt: now }; }

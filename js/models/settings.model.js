@@ -1,0 +1,3 @@
+import { APP } from '../config.js';
+import { nowIso } from '../utils/dates.js';
+export function defaultSettings(data = {}) { const now = nowIso(); return { id: 'main', theme: data.theme || 'auto', currency: data.currency || 'EUR', customCurrencySymbol: data.customCurrencySymbol || '', eventWarningDays: Number(data.eventWarningDays ?? 30), christmasWarningDays: Number(data.christmasWarningDays ?? 60), defaultInterestLevel: Number(data.defaultInterestLevel ?? 2), defaultIdeaStatus: data.defaultIdeaStatus || 'idee', defaultCategoryId: data.defaultCategoryId || 'cat_autre', exportPhotos: Boolean(data.exportPhotos), firstLaunchDone: Boolean(data.firstLaunchDone), appVersion: APP.version, createdAt: data.createdAt || now, updatedAt: now }; }

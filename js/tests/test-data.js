@@ -1,0 +1,2 @@
+export const samplePeople=[{id:'p1',name:'Alex',archived:false},{id:'p2',name:'Sam',archived:true}];
+export const sampleIdeas=[{id:'i1',personId:'p1',title:'Casque',interestLevel:4,status:'a_acheter',estimatedPrice:80,link:'https://example.com',createdAt:new Date().toISOString(),archived:false},{id:'i2',personId:'p1',title:'Montre',interestLevel:3,status:'idee',estimatedPrice:180,createdAt:'2020-01-01T00:00:00Z',archived:false}];

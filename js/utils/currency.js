@@ -1,0 +1,2 @@
+export function currencySymbol(settings={}){ if(settings.currency==='CUSTOM') return settings.customCurrencySymbol || '¤'; try { return (0).toLocaleString('fr-FR',{style:'currency',currency:settings.currency||'EUR'}).replace(/[\d\s.,]/g,'') || '€'; } catch { return '€'; } }
+export function formatMoney(value, settings={}){ if(value==null || value==='') return 'Prix mystère'; try { return Number(value).toLocaleString('fr-FR',{style:'currency',currency:settings.currency||'EUR'}); } catch { return `${value} ${currencySymbol(settings)}`; } }

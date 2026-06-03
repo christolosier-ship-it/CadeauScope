@@ -1,0 +1,4 @@
+:root{
+  --primary:#D94F5C;--primary-dark:#B9404B;--bg:#FFF5EA;--card:#FFFFFF;--text:#293241;--muted:#8A8F98;--gold:#F2B84B;--green:#6FAF8D;--dark-bg:#151820;--dark-card:#222733;--light-text:#F7F3EE;
+  --danger:#C74444;--shadow:0 14px 34px rgba(41,50,65,.13);--radius:22px;--radius-sm:14px;--nav-h:78px;--safe-bottom:env(safe-area-inset-bottom,0px);--font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
