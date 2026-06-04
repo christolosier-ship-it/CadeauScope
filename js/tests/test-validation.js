@@ -16,3 +16,8 @@ assert.equal(escapeHtml('<script>alert(1)</script>'),'&lt;script&gt;alert(1)&lt;
 assert.equal(safeHttpUrl('javascript:alert(1)'),'');
 assert.equal(safeHttpUrl('https://example.test'),'https://example.test');
 console.log('test-validation ok');
+assert.equal(validatePerson({name:'Léa', birthday:'04-06'}).birthday, undefined);
+assert.equal(validatePerson({name:'Léa', birthday:'31-02'}).birthday, 'Anniversaire attendu au format JJ-MM.');
+assert.equal(validateOccasion({name:'Noël',date:'25-12-2026',totalBudget:'10'}).date, undefined);
+assert.equal(validateOccasion({name:'Noël',date:'2026-12-25',totalBudget:'10'}).date, undefined);
+assert.equal(validateOccasion({name:'Noël',date:'31-02-2026',totalBudget:'10'}).date, 'Date attendue au format JJ-MM-AAAA.');

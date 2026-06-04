@@ -24,3 +24,4 @@ assert.equal(shouldShowEventReminder(event, people, ideas, {christmasWarningDays
 assert.equal(shouldShowEventReminder({...event, personIds:['p3'], source:'birthday'}, people, ideas, {eventWarningDays:999}), false);
 assert.deepEqual(eventReminderStats(event, people, ideas), {personCount:1, ideaCount:2});
 console.log('test-events ok');
+assert.equal(nextEventDate({ monthDay: '06-04' }).slice(5), '06-04');

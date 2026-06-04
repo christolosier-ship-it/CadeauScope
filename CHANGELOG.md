@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.4 - 2026-06-04
+
+- Suppression de Noël dans les fiches personnes : l’événement Noël devient la seule source de vérité, avec migration douce des anciens `christmasEnabled: true`.
+- Suppression de la case “Année connue” et simplification du formulaire personne autour du nom, de la relation, de l’anniversaire et des notes.
+- Passage des dates visibles en français (`JJ-MM-AAAA`) et des anniversaires en `JJ-MM`, avec compatibilité des anciennes valeurs ISO.
+- Consolidation des anniversaires automatiques `birthday_[personId]` sans dépendre de `birthdayHasYear`.
+- Clarification du budget événement comme budget indicatif, sans faux calcul de dépense événementielle.
+- Accueil recentré sur les événements, avec une section utile pour les personnes sans idée dans les événements proches.
+- Filtres personnes simplifiés en “Toutes”, “Avec idées” et “Sans idée”.
+- Réactivation explicite des événements masqués et retrait de l’action visible “Clôturer”.
+
 ## 1.0.3 - 2026-06-04
 
 - Retour d’Événements dans la navigation principale.
