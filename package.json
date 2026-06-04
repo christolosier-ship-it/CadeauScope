@@ -7,6 +7,6 @@
     "test:dates": "node js/tests/test-dates.js",
     "test:budget": "node js/tests/test-budget.js",
     "test:panic": "node js/tests/test-panic.js",
-    "test": "node js/tests/test-dates.js && node js/tests/test-budget.js && node js/tests/test-panic.js && node js/tests/test-validation.js"
+    "test": "node js/tests/test-dates.js && node js/tests/test-budget.js && node js/tests/test-panic.js && node js/tests/test-validation.js && node js/tests/test-imports.js"
   }
 }
