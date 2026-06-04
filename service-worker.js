@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cadeauscope-v1.0.1';
+const CACHE_NAME = 'cadeauscope-v1.0.2';
 const ESSENTIAL_ASSETS = [
   './',
   './index.html',

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.2 - 2026-06-04
+
+- Simplification UX : une idée est désormais créée pour une personne, sans choix d’occasion dans le flux principal.
+- Réduction des états visibles aux idées disponibles, cadeaux offerts et action secondaire “Ne plus proposer”.
+- Normalisation douce des anciens statuts `a_acheter`, `achete` et `emballe` comme idées actives.
+- Mode Panique simplifié autour de “Pour qui ?”, “Budget max” et “Élargir la recherche”.
+- Les événements ressortent les idées disponibles des personnes concernées au lieu de dépendre de `occasionId`.
+- Accueil, cartes idées, détail idée, filtres et navigation basse allégés.
+- Import/export conservé, sans export des photos, avec normalisation des anciennes idées importées.
+
 ## 1.0.1 - 2026-06-04
 
 - Ajout de la modification complète des idées, avec conservation des champs existants et remplacement optionnel de photo locale.

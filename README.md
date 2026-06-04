@@ -1,4 +1,4 @@
-# CadeauScope 1.0.1
+# CadeauScope 1.0.2
 
 > “Fini les cadeaux trouvés à 17h42 la veille.”
 
@@ -6,9 +6,10 @@ CadeauScope est une PWA mobile-first, offline-first et sans backend pour capture
 
 ## Fonctionnalités
 
-- Capture rapide d’idée cadeau en moins de 10 secondes.
-- Gestion des personnes, préférences, idées, occasions, historique et catégories.
-- Mode Panique Cadeau avec score local pour sortir les meilleures pistes.
+- Capture rapide centrée sur une personne, une idée, un prix approximatif et une note ou un lien.
+- Événements liés aux personnes concernées : les idées ne sont plus classées par occasion.
+- États simplifiés : idée disponible, cadeau offert, ou idée à ne plus proposer.
+- Mode Panique Cadeau simplifié pour retrouver vite une idée par personne et budget.
 - PWA installable compatible GitHub Pages et iPhone Safari.
 - Données persistées localement dans IndexedDB (`cadeauscope_db`, version 1).
 - Export/import JSON sans photos.
@@ -72,7 +73,7 @@ L’export contient :
 {
   "app": "CadeauScope",
   "schemaVersion": 1,
-  "appVersion": "1.0.1",
+  "appVersion": "1.0.2",
   "exportedAt": "...",
   "people": [],
   "ideas": [],
@@ -83,7 +84,7 @@ L’export contient :
 }
 ```
 
-Les photos sont exclues en V1. L’import remplace toutes les données actuelles après confirmation forte et nettoie les références `photoId`.
+Les photos sont exclues en V1. L’import remplace toutes les données actuelles après confirmation forte, nettoie les références `photoId` et normalise les anciens statuts avancés.
 
 ## Icônes PNG à ajouter manuellement
 
@@ -99,7 +100,7 @@ Le manifeste référence déjà ces chemins. L’application reste utilisable m�
 
 ## Limites V1
 
-- Interface volontairement emoji-first ; `js/ui/icons.js` prépare le remplacement par SVG.
+- Interface volontairement emoji-first ; aucun asset graphique n’est généré par le projet.
 - Photos stockables localement mais non exportées.
 - Gestion des catégories personnalisées prête côté données, interface minimale.
 - Pas de synchronisation multi-appareil.
@@ -109,7 +110,7 @@ Le manifeste référence déjà ces chemins. L’application reste utilisable m�
 
 ```bash
 npm test
-find . -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) -print
+find . -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' -o -iname '*.svg' -o -iname '*.ico' \) -not -path './.git/*' -print
 ```
 
 La deuxième commande ne doit rien afficher après génération.
