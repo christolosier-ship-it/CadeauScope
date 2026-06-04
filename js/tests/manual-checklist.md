@@ -1,23 +1,19 @@
-# Checklist manuelle CadeauScope V1
+# Checklist manuelle CadeauScope 1.0.3
 
-- [ ] créer une personne
-- [ ] créer une idée
-- [ ] modifier une idée
-- [ ] changer un statut
-- [ ] passer une idée à Offert
-- [ ] ajouter à l’historique
-- [ ] ajouter un cadeau passé
-- [ ] créer une occasion
-- [ ] ajouter budget global
-- [ ] ajouter budget par personne
-- [ ] lancer Mode Panique depuis accueil
-- [ ] lancer Mode Panique depuis personne
-- [ ] lancer Mode Panique depuis occasion
-- [ ] vérifier section Hors budget
-- [ ] vérifier personne sans idée
-- [ ] exporter JSON
-- [ ] importer JSON
-- [ ] réinitialiser avec SUPPRIMER
-- [ ] tester offline
-- [ ] vérifier thème clair/sombre/auto
-- [ ] vérifier qu’aucun PNG n’a été généré
+- [ ] l’application démarre
+- [ ] la navigation affiche Accueil, Idées, Personnes, Événements, Réglages
+- [ ] la page Événements est accessible
+- [ ] les événements classiques sont visibles dans Tous
+- [ ] ouvrir Noël
+- [ ] lier/délier des personnes à Noël
+- [ ] Noël affiche les idées actives des personnes liées
+- [ ] la modale + Idée ne propose pas d’événement
+- [ ] créer une personne avec anniversaire crée un événement anniversaire
+- [ ] modifier l’anniversaire met à jour l’événement anniversaire
+- [ ] l’accueil affiche les événements à préparer
+- [ ] les événements sans personne liée ne polluent pas l’accueil
+- [ ] lancer Mode Panique depuis un événement
+- [ ] les statuts visibles restent Idée / Offert / Ne plus proposer
+- [ ] exporter puis importer JSON
+- [ ] npm test passe
+- [ ] aucun fichier image n’a été généré

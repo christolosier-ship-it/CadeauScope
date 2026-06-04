@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.3 - 2026-06-04
+
+- Retour d’Événements dans la navigation principale.
+- Ajout des événements classiques français préinstallés, avec dates fixes ou calculées et sans liaison automatique de toutes les personnes.
+- Ajout de la gestion des personnes liées à chaque événement et affichage des idées actives de ces personnes uniquement.
+- Synchronisation automatique des anniversaires depuis les personnes, sans doublon et masquée si la personne est archivée ou sans anniversaire.
+- Accueil recentré sur “Événements à préparer” avec personnes et idées disponibles.
+- Mode Panique depuis un événement limité aux personnes liées, sans utiliser les anciennes associations `occasionId`.
+- Import/export normalise les événements, conserve les personnes liées et recrée les événements classiques manquants.
+
 ## 1.0.2 - 2026-06-04
 
 - Simplification UX : une idée est désormais créée pour une personne, sans choix d’occasion dans le flux principal.
