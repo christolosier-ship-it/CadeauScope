@@ -1,6 +1,5 @@
 import { repositories } from '../db/repositories.js';
 import { defaultSettings } from '../models/settings.model.js';
-import { nowIso } from '../utils/dates.js';
+import { validateSettings, hasErrors } from './validation.service.js';
 export async function getSettings(){ return (await repositories.settings.get('main')) || defaultSettings(); }
-export async function saveSettings(patch){ const current=await getSettings(); const next={...current,...patch,id:'main',updatedAt:nowIso()}; await repositories.settings.put(next); applyTheme(next); return next; }
-export function applyTheme(settings){ const theme=settings.theme || 'auto'; const dark = theme==='dark' || (theme==='auto' && matchMedia('(prefers-color-scheme: dark)').matches); document.documentElement.dataset.theme = dark ? 'dark' : 'light'; }
+export async function saveSettings(data){ const errors=validateSettings(data); if(hasErrors(errors)) throw Object.assign(new Error('Réglages invalides'),{errors}); const existing=await getSettings(); const item=defaultSettings({...existing,...data,createdAt:existing.createdAt}); await repositories.settings.put(item); return item; }

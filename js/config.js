@@ -1,4 +1,4 @@
-export const APP = { name: 'CadeauScope', version: '1.0.0', slogan: 'Fini les cadeaux trouvés à 17h42 la veille.' };
+export const APP = { name: 'CadeauScope', version: '1.0.1', slogan: 'Fini les cadeaux trouvés à 17h42 la veille.' };
 export const DB = { name: 'cadeauscope_db', version: 1 };
 export const STATUSES = {
   idee: 'Idée', a_acheter: 'À acheter', achete: 'Acheté', emballe: 'Emballé', offert: 'Offert', abandonne: 'Abandonné'

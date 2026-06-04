@@ -1,4 +1,4 @@
-# CadeauScope 1.0.0
+# CadeauScope 1.0.1
 
 > “Fini les cadeaux trouvés à 17h42 la veille.”
 
@@ -72,7 +72,7 @@ L’export contient :
 {
   "app": "CadeauScope",
   "schemaVersion": 1,
-  "appVersion": "1.0.0",
+  "appVersion": "1.0.1",
   "exportedAt": "...",
   "people": [],
   "ideas": [],

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cadeauscope-v1.0.0';
+const CACHE_NAME = 'cadeauscope-v1.0.1';
 const ESSENTIAL_ASSETS = [
   './',
   './index.html',
@@ -51,6 +51,7 @@ const ESSENTIAL_ASSETS = [
   './js/ui/dom.js',
   './js/ui/forms.js',
   './js/ui/icons.js',
+  './js/ui/idea-card-actions.js',
   './js/ui/modals.js',
   './js/ui/navigation.js',
   './js/ui/render.js',
@@ -60,6 +61,7 @@ const ESSENTIAL_ASSETS = [
   './js/utils/debug.js',
   './js/utils/files.js',
   './js/utils/ids.js',
+  './js/utils/numbers.js',
   './js/utils/storage.js',
   './js/utils/strings.js'
 ];

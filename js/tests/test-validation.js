@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import { createIdea } from '../models/ideas.model.js';
+import { createPerson } from '../models/people.model.js';
+import { createHistory } from '../models/history.model.js';
+import { validateIdea, validateOccasion, validateSettings, validateHistory, validatePerson } from '../services/validation.service.js';
+import { escapeHtml, safeHttpUrl } from '../utils/strings.js';
+assert.equal(validateIdea({personId:'p1',title:'x',estimatedPrice:'abc'}).estimatedPrice,'Prix estimé positif ou vide.');
+assert.equal(createIdea({personId:'p1',title:'x',estimatedPrice:'abc'}).estimatedPrice,null);
+assert.equal(validateOccasion({name:'Noël',date:'2026-12-25',totalBudget:'abc'}).totalBudget,'Budget positif ou vide.');
+assert.equal(validateSettings({eventWarningDays:'0',christmasWarningDays:'abc'}).eventWarningDays,'Délai événements: nombre de jours supérieur à 0.');
+assert.equal(validateHistory({price:'abc'}).price,'Prix historique positif ou vide.');
+assert.equal(validatePerson({name:'Ada',defaultBudget:'abc'}).defaultBudget,'Budget personne positif ou vide.');
+assert.equal(createPerson({name:'Ada',defaultBudget:'abc'}).defaultBudget,null);
+assert.equal(createHistory({title:'x',price:'abc'}).price,null);
+assert.equal(escapeHtml('<script>alert(1)</script>'),'&lt;script&gt;alert(1)&lt;/script&gt;');
+assert.equal(safeHttpUrl('javascript:alert(1)'),'');
+assert.equal(safeHttpUrl('https://example.test'),'https://example.test');
+console.log('test-validation ok');
