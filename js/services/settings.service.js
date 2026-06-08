@@ -12,4 +12,7 @@ export function applyTheme(settings = {}) {
   } else {
     root.removeAttribute('data-theme');
   }
+
+  const meta = document.querySelector?.('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', theme === 'dark' ? '#222733' : '#D94F5C');
 }

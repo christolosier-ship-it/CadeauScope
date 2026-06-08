@@ -1,5 +1,10 @@
 export const nowIso = () => new Date().toISOString();
-export const todayInput = () => new Date().toISOString().slice(0,10);
+export function todayInput(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 
 const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
 const FR_DATE = /^(\d{2})-(\d{2})-(\d{4})$/;
@@ -7,7 +12,7 @@ const FR_BIRTHDAY = /^(\d{2})-(\d{2})(?:-(\d{4}))?$/;
 const LEGACY_BIRTHDAY = /^(\d{2})-(\d{2})$/;
 
 function pad(value) { return String(value).padStart(2, '0'); }
-function isValidDateParts(year, month, day) {
+export function isValidDateParts(year, month, day) {
   if (!Number.isInteger(year) || !Number.isInteger(month) || !Number.isInteger(day)) return false;
   if (year < 1000 || month < 1 || month > 12 || day < 1) return false;
   const date = new Date(Date.UTC(year, month - 1, day));
@@ -102,7 +107,22 @@ export function addDays(date, days){ const d=new Date(date); d.setDate(d.getDate
 export function daysUntil(dateString){ const normalized = normalizeLegacyDate(dateString); if(!normalized) return Number.POSITIVE_INFINITY; const target=new Date(normalized+'T00:00:00'); const now=new Date(todayInput()+'T00:00:00'); return Math.ceil((target-now)/86400000); }
 export function formatDate(dateString){ return formatDateFr(dateString); }
 export function normalizeDate(value){ return normalizeLegacyDate(value); }
-export function nextAnnualDate(monthDay){ if(!monthDay) return ''; const raw = String(monthDay); const md = /^\d{2}-\d{2}$/.test(raw) ? raw : (normalizeLegacyBirthday(raw) || raw.slice(5)); const y = new Date().getFullYear(); let date = `${y}-${md}`; if(daysUntil(date)<0) date = `${y+1}-${md}`; return date; }
+export function nextAnnualDate(monthDay, fromDate = new Date()){
+  if(!monthDay) return '';
+  const raw = String(monthDay);
+  const md = /^\d{2}-\d{2}$/.test(raw) ? raw : (normalizeLegacyBirthday(raw) || raw.slice(5));
+  const [month, day] = md.split('-').map(Number);
+  if(!Number.isInteger(month) || !Number.isInteger(day)) return '';
+  const today = new Date(todayInput(fromDate)+'T00:00:00');
+  let year = fromDate.getFullYear();
+  for(let i = 0; i < 12; i += 1){
+    if(!isValidDateParts(year, month, day)){ year += 1; continue; }
+    const candidate = toIso(year, month, day);
+    if(new Date(candidate+'T00:00:00') >= today) return candidate;
+    year += 1;
+  }
+  return '';
+}
 export function nextBirthday(person){ if(!person?.birthday) return ''; return nextAnnualDate(normalizeLegacyBirthday(person.birthday)); }
 export function nextChristmas(){ return nextAnnualDate('12-25'); }
 export function isWithin(dateString, days){ const d=daysUntil(dateString); return d>=0 && d<=Number(days); }

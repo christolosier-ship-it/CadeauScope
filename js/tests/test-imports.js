@@ -89,11 +89,14 @@ const root = {
     this.removed = name;
   }
 };
-globalThis.document = { documentElement: root };
+const meta = { value:'', setAttribute(name, value){ if(name === 'content') this.value = value; } };
+globalThis.document = { documentElement: root, querySelector: selector => selector === 'meta[name="theme-color"]' ? meta : null };
 applyTheme({ theme: 'dark' });
 assert.equal(root.dataset.theme, 'dark');
+assert.equal(meta.value, '#222733');
 applyTheme({ theme: 'light' });
 assert.equal(root.dataset.theme, 'light');
+assert.equal(meta.value, '#D94F5C');
 applyTheme({ theme: 'auto' });
 assert.equal(root.dataset.theme, undefined);
 assert.equal(root.removed, 'data-theme');

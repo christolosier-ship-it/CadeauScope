@@ -1,7 +1,7 @@
 import { repositories } from '../db/repositories.js';
 import { createOccasion } from '../models/occasions.model.js';
 import { validateOccasion, hasErrors } from './validation.service.js';
-import { getSettings } from './settings.service.js';
+import { getSettings, saveSettings } from './settings.service.js';
 import { daysUntil, isWithin, nowIso, nextAnnualDate, todayInput, normalizeLegacyBirthday } from '../utils/dates.js';
 
 export const DEFAULT_CLASSIC_EVENTS = [
@@ -61,6 +61,15 @@ export function shouldShowEventReminder(event, people = [], ideas = [], settings
   const windowDays = Number(event.reminderDays || (event.type === 'christmas' ? settings.christmasWarningDays : settings.eventWarningDays) || 30);
   return isWithin(event.date, windowDays);
 }
+export function shouldShowEventInAll(event, settings = {}) {
+  if (!event || event.archived || event.hidden) return false;
+  if (event.id === 'classic_noel' || event.type === 'christmas') return true;
+  if (event.source === 'birthday' || event.type === 'birthday') {
+    const windowDays = Number(event.reminderDays || settings.eventWarningDays || 30);
+    return isWithin(event.date, windowDays);
+  }
+  return true;
+}
 export function eventReminderStats(event, people = [], ideas = []) { const activePeople = new Set(people.filter(p => !p.archived).map(p => p.id)); const personIds = (event.personIds || []).filter(id => activePeople.has(id)); return { personCount: personIds.length, ideaCount: availableIdeasForEvent({ ...event, personIds }, ideas).length }; }
 
 export const listManualOccasions = () => repositories.occasions.all();
@@ -86,14 +95,21 @@ function normalizeEvent(item, people = []) {
 }
 
 export async function ensureClassicEvents() {
-  const [existing, people] = await Promise.all([repositories.occasions.all(), allPeople(true)]);
+  const [existing, people, settings] = await Promise.all([repositories.occasions.all(), allPeople(true), getSettings()]);
+  const shouldMigrateChristmas = settings.legacyChristmasMigrated !== true;
   for (const event of DEFAULT_CLASSIC_EVENTS) {
     const found = existing.find(o => o.id === event.id || (o.type === event.type && o.source !== 'birthday'));
-    const migratedChristmasIds = event.id === 'classic_noel' ? people.filter(p => p.christmasEnabled === true).map(p => p.id) : [];
+    const migratedChristmasIds = event.id === 'classic_noel' && shouldMigrateChristmas ? people.filter(p => p.christmasEnabled === true).map(p => p.id) : [];
     const personIds = Array.from(new Set([...(found?.personIds || []), ...migratedChristmasIds]));
     const next = normalizeEvent(found ? { ...found, id: event.id, ...event, personIds } : { ...event, date: nextEventDate(event), personIds, source: 'classic' }, people);
     await repositories.occasions.put(next);
     if (found?.id && found.id !== event.id) await repositories.occasions.delete(found.id);
+  }
+  if (shouldMigrateChristmas) {
+    for (const person of people.filter(p => p.christmasEnabled === true)) {
+      await repositories.people.put({ ...person, christmasEnabled: false, updatedAt: nowIso() });
+    }
+    await saveSettings({ ...settings, legacyChristmasMigrated: true });
   }
 }
 
@@ -156,9 +172,10 @@ export async function listOccasions(filter = 'a_venir') {
   await normalizeOccasions();
   const [events, people, ideas, settings] = await Promise.all([repositories.occasions.all(), allPeople(true), repositories.ideas.all(), getSettings()]);
   let all = events.map(o => ({ ...o, date: o.source === 'classic' ? nextEventDate(DEFAULT_CLASSIC_EVENTS.find(e => e.id === o.id) || o) : (o.source === 'birthday' ? nextEventDate({ monthDay: o.date?.slice(5) || normalizeLegacyBirthday(o.date) || '' }) : o.date) }));
-  if (filter === 'preparer') all = all.filter(o => shouldShowEventReminder(o, people, ideas, settings));
+  if (filter === 'preparer' || filter === 'a_venir') all = all.filter(o => shouldShowEventReminder(o, people, ideas, settings));
   else if (filter === 'masques' || filter === 'archivees') all = all.filter(o => o.archived || o.hidden);
-  else if (filter && filter !== 'toutes') all = all.filter(o => !o.archived && !o.hidden);
+  else if (filter === 'toutes') all = all.filter(o => shouldShowEventInAll(o, settings));
+  else if (filter) all = all.filter(o => !o.archived && !o.hidden);
   return all.sort((a, b) => daysUntil(a.date) - daysUntil(b.date));
 }
 export async function eventsToPrepare() {
@@ -168,4 +185,12 @@ export async function eventsToPrepare() {
 export async function updateEventPeople(id, personIds = []) { const event = await repositories.occasions.get(id); if (!event) return null; return saveOccasion({ ...event, personIds }); }
 export async function closeOccasion(id) { const o = await repositories.occasions.get(id); if (!o) return null; const next = { ...o, status: 'terminee', updatedAt: nowIso() }; await repositories.occasions.put(next); return next; }
 export async function hideOccasion(id, hidden = true) { const o = await repositories.occasions.get(id); if (!o) return null; const next = { ...o, hidden, archived: hidden, updatedAt: nowIso() }; await repositories.occasions.put(next); return next; }
-export async function deleteOccasion(id) { const o = await repositories.occasions.get(id); if (o?.source === 'classic' || o?.source === 'birthday') return hideOccasion(id, true); await repositories.occasions.delete(id); }
+export async function deleteOccasion(id) {
+  const o = await repositories.occasions.get(id);
+  if (o?.source === 'classic' || o?.source === 'birthday') return hideOccasion(id, true);
+  const ideas = await repositories.ideas.all();
+  for (const idea of ideas.filter(i => i.occasionId === id)) {
+    await repositories.ideas.put({ ...idea, occasionId: '', occasionMode: 'none', updatedAt: nowIso() });
+  }
+  await repositories.occasions.delete(id);
+}

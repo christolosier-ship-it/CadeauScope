@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.5 - 2026-06-08
+
+- Migration legacy de Noël exécutée une seule fois, avec neutralisation de `christmasEnabled`.
+- Dates du jour basées sur le fuseau local et anniversaires du 29 février reportés au prochain vrai 29 février.
+- Filtres Personnes et Événements clarifiés, avec accès aux personnes archivées et événements masqués.
+- Mode Panique : les idées sans prix restent éligibles avec un léger malus au lieu d’être hors budget.
+- Suppression des événements manuels : nettoyage des anciens `occasionId`/`occasionMode` sans supprimer les idées.
+- Thème appliqué immédiatement, import JSON invalide géré proprement, styles d’inputs et grille KPI harmonisés.
+
 ## 1.0.4 - 2026-06-04
 
 - Suppression de Noël dans les fiches personnes : l’événement Noël devient la seule source de vérité, avec migration douce des anciens `christmasEnabled: true`.

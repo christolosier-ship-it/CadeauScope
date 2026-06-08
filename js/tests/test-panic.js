@@ -4,6 +4,9 @@ import { samplePeople, sampleIdeas } from './test-data.js';
 const res=panicResults({ideas:sampleIdeas,people:samplePeople,criteria:{personId:'p1',budgetMax:100}});
 assert.equal(res.best[0].idea.id,'i1');
 assert.equal(res.outOfBudget[0].idea.id,'i2');
+const priceless=panicResults({people:[{id:'p1',archived:false}],ideas:[{id:'no-price',personId:'p1',status:'idee',estimatedPrice:null,interestLevel:2,createdAt:new Date().toISOString()},{id:'too-high',personId:'p1',status:'idee',estimatedPrice:200,interestLevel:2,createdAt:new Date().toISOString()}],criteria:{personId:'p1',budgetMax:100}});
+assert.deepEqual(priceless.best.map(x=>x.idea.id), ['no-price']);
+assert.deepEqual(priceless.outOfBudget.map(x=>x.idea.id), ['too-high']);
 const scoped=panicResults({
   people:[{id:'p1',archived:false},{id:'p2',archived:false}],
   ideas:[

@@ -1,4 +1,4 @@
-# CadeauScope 1.0.4
+# CadeauScope 1.0.5
 
 > “Fini les cadeaux trouvés à 17h42 la veille.”
 
@@ -45,7 +45,8 @@ Ouvrez ensuite `http://localhost:8080`.
 - `js/ui/` : DOM, rendus, navigation, toasts, modales, emojis.
 - `js/screens/` : écrans principaux.
 - `js/tests/` : tests Node simples et checklist manuelle.
-- `assets/icons`, `assets/images`, `assets/screenshots` : dossiers réservés, contenant uniquement `.gitkeep` dans cette génération.
+- `assets/icons` : icônes PNG existantes référencées par le manifest et le Service Worker.
+- `assets/images`, `assets/screenshots` : dossiers réservés aux contenus ajoutés manuellement si besoin.
 
 ## Données stockées localement
 
@@ -59,7 +60,7 @@ IndexedDB contient les stores suivants :
 - `photos`
 - `settings`
 
-Le store `photos` est prévu pour les images ajoutées par l’utilisateur depuis l’application. Aucune photo n’est fournie dans le projet généré.
+Le store `photos` est prévu pour les images ajoutées par l’utilisateur depuis l’application. Les PNG d’icônes existants peuvent être référencés par la PWA, mais ils restent des assets à gérer manuellement : aucune génération ou conversion automatique de PNG n’est requise.
 
 ## Fonctionnement offline
 
@@ -73,7 +74,7 @@ L’export contient :
 {
   "app": "CadeauScope",
   "schemaVersion": 1,
-  "appVersion": "1.0.4",
+  "appVersion": "1.0.5",
   "exportedAt": "...",
   "people": [],
   "ideas": [],
@@ -86,17 +87,15 @@ L’export contient :
 
 Les photos sont exclues en V1. L’import remplace toutes les données actuelles après confirmation forte, nettoie les références `photoId` et normalise les anciens statuts avancés.
 
-## Icônes PNG à ajouter manuellement
+## Icônes PNG
 
-**Important : Codex ne doit pas créer d’images PNG dans ce projet.** Cette génération ne contient aucun PNG, JPG, JPEG, WEBP, image binaire ou image base64.
-
-Pour finaliser l’installabilité visuelle de la PWA, ajoutez manuellement ces fichiers dans GitHub :
+**Important : Codex ne doit pas créer ni modifier d’images PNG dans ce projet.** Les icônes PNG existantes sont référencées par le manifeste, le HTML et le Service Worker :
 
 - `assets/icons/icon-192.png`
 - `assets/icons/icon-512.png`
 - `assets/icons/apple-touch-icon.png`
 
-Le manifeste référence déjà ces chemins. L’application reste utilisable même si ces fichiers ne sont pas encore présents.
+Si de nouvelles variantes d’icônes sont nécessaires, elles doivent être préparées et ajoutées manuellement hors génération de code.
 
 ## Limites V1
 

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
-import { daysUntil, formatBirthdayFr, formatDateFr, nextAnnualDate, normalizeLegacyBirthday, normalizeLegacyDate, parseFrenchBirthday, parseFrenchDate } from '../utils/dates.js';
+import { daysUntil, formatBirthdayFr, formatDateFr, nextAnnualDate, normalizeLegacyBirthday, normalizeLegacyDate, parseFrenchBirthday, parseFrenchDate, todayInput } from '../utils/dates.js';
 assert.match(nextAnnualDate('12-25'), /^\d{4}-12-25$/);
+assert.equal(todayInput(new Date(2026, 0, 2, 23, 30)), '2026-01-02');
 assert.equal(typeof daysUntil(nextAnnualDate('12-25')), 'number');
 assert.equal(parseFrenchDate('04-06-2026').value, '2026-06-04');
 assert.equal(parseFrenchDate('31-02-2026').error, 'Date invalide.');
@@ -10,4 +11,7 @@ assert.equal(parseFrenchBirthday('04-06').value, '06-04');
 assert.equal(parseFrenchBirthday('04-06-2026').value, '06-04');
 assert.equal(normalizeLegacyBirthday('2026-06-04'), '06-04');
 assert.equal(formatBirthdayFr('06-04'), '04-06');
+assert.equal(nextAnnualDate('02-29', new Date(2026, 0, 1)), '2028-02-29');
+assert.equal(nextAnnualDate('02-29', new Date(2028, 1, 1)), '2028-02-29');
+assert.equal(nextAnnualDate('02-29', new Date(2028, 2, 1)), '2032-02-29');
 console.log('test-dates ok');
